@@ -94,10 +94,16 @@ impl BuildCommand {
             let manifest: ShaderPackManifest = serde_json::from_str(&read_to_string(
                 directory.join(SHADERPACK_MANIFEST_FILENAME),
             )?)?;
-            println!(
-                "{} by {:?} for ReShade v{}:",
-                manifest.name, manifest.authors, manifest.reshade_version
-            );
+
+            println!("Processing {} by {:?}:", manifest.name, manifest.authors);
+            if manifest.reshade_version != configuration.reshade_version {
+                eprintln!(
+                    " * This collection is for a different ReShade version! {} != {}",
+                    manifest.reshade_version, configuration.reshade_version
+                );
+                println!();
+                continue;
+            }
 
             // Copy shaders to the build directory.
             let shaders = manifest.shaders.unwrap_or_default();
