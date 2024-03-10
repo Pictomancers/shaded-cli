@@ -1,16 +1,17 @@
 mod commands;
-mod constants;
-mod manifests;
 
 use clap::Parser;
 use colored::Colorize;
-use commands::{manifest::ManifestCommand, package::PackageSubcommand};
+use commands::{collection::CollectionCommandBase, shaderpack::ShaderpackCommandBase};
 use std::process::ExitCode;
 
 #[derive(Debug, Parser)]
 enum Commands {
-    Package(PackageSubcommand),
-    Manifest(ManifestCommand),
+    /// Commands relating to Shaded collections.
+    Collection(CollectionCommandBase),
+
+    /// Commands relating to Shaded Shaderpacks.
+    Shaderpack(ShaderpackCommandBase),
 }
 
 #[derive(Debug, Parser)]
@@ -23,8 +24,8 @@ fn main() -> ExitCode {
     let args = ProgramArgs::parse();
 
     if let Err(err) = match args.cmd {
-        Commands::Package(cmd) => cmd.run(),
-        Commands::Manifest(cmd) => cmd.run(),
+        Commands::Collection(cmd) => cmd.run(),
+        Commands::Shaderpack(cmd) => cmd.run(),
     } {
         eprintln!("{}: {:?}", "Error".red(), err);
         return ExitCode::from(1);

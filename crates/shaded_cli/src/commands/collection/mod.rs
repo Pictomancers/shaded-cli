@@ -11,12 +11,12 @@ pub enum PackageSubcommands {
 
 /// Commands for managing shader packages.
 #[derive(Debug, Parser)]
-pub struct PackageSubcommand {
+pub struct CollectionCommandBase {
     #[clap(subcommand)]
     subcommand: PackageSubcommands,
 }
 
-impl PackageSubcommand {
+impl CollectionCommandBase {
     pub fn run(&self) -> Result<()> {
         match &self.subcommand {
             PackageSubcommands::Build(cmd) => cmd.run(),

@@ -1,22 +1,23 @@
-use crate::manifests::shader_content::ShaderContentManifest;
 use anyhow::Result;
 use clap::Parser;
+use shaded_models::shaderpack::ShaderPackManifest;
 use std::{
     fs::{self, OpenOptions},
     io::Write,
     path::PathBuf,
 };
 
-/// Format a shader manifest.
+/// Format a shaderpack manifest file.
 #[derive(Debug, Parser)]
 pub struct FormatCommand {
-    pub manifest: PathBuf,
+    /// Path to the shaderpack manifest file.
+    pub manifest_path: PathBuf,
 }
 
 impl FormatCommand {
     pub fn run(&self) -> Result<()> {
-        let mut manifest: ShaderContentManifest =
-            serde_json::from_str(&fs::read_to_string(&self.manifest)?)?;
+        let mut manifest: ShaderPackManifest =
+            serde_json::from_str(&fs::read_to_string(&self.manifest_path)?)?;
         manifest.shaders.as_deref_mut().map(|s| s.sort());
         manifest.textures.as_deref_mut().unwrap_or_default().sort();
         manifest.presets.as_deref_mut().unwrap_or_default().sort();
@@ -28,7 +29,7 @@ impl FormatCommand {
             .write(true)
             .append(false)
             .create(true)
-            .open(&self.manifest)?;
+            .open(&self.manifest_path)?;
         file.write_all(manifest.as_bytes())?;
         file.flush()?;
 

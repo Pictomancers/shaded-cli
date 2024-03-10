@@ -1,30 +1,27 @@
-mod create;
 mod format;
 mod validate;
 
-use self::{create::CreateCommand, format::FormatCommand};
+use self::format::FormatCommand;
 use anyhow::Result;
 use clap::Parser;
 
 #[derive(Debug, Parser)]
 pub enum ManifestSubcommands {
     Validate(validate::ValidateCommand),
-    Create(CreateCommand),
     Format(FormatCommand),
 }
 
 /// Commands for manging and validating shader manifests.
 #[derive(Debug, Parser)]
-pub struct ManifestCommand {
+pub struct ShaderpackCommandBase {
     #[clap(subcommand)]
     subcommand: ManifestSubcommands,
 }
 
-impl ManifestCommand {
+impl ShaderpackCommandBase {
     pub fn run(&self) -> Result<()> {
         match &self.subcommand {
             ManifestSubcommands::Validate(cmd) => cmd.run(),
-            ManifestSubcommands::Create(cmd) => cmd.run(),
             ManifestSubcommands::Format(cmd) => cmd.run(),
         }
     }
