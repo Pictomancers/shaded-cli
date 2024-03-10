@@ -1,6 +1,3 @@
 {
-  "rust-analyzer.linkedProjects": [
-    "./Shaded.CLI/Cargo.toml"
-  ],
   "rust-analyzer.highlightRelated.exitPoints.enable": true
 }
