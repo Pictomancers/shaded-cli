@@ -20,13 +20,15 @@ use std::{
 use walkdir::{DirEntry, WalkDir};
 use zip_extensions::zip_create_from_directory;
 
+const BUILD_FILES_SUBDIRECTORY_NAME: &str = ".build";
+
 /// Build a collection using the provided configuration file and output it to the given directory
 /// as a zip archive.
 #[derive(Debug, Parser)]
 pub struct BuildCommand {
     /// Path to the collection configuration file.
     #[arg(short = 'c', long = "configuration")]
-    configuration_path: PathBuf,
+    configuration_file_path: PathBuf,
 
     /// Path to a directory that the built collection archive should be placed at.
     #[arg(short = 'o', long = "output")]
@@ -55,17 +57,17 @@ impl BuildCommand {
         }
 
         // Create a build directory to temporarily place all files in before they're turned into an archive.
-        let temp_build_directory = self.output_path.join(".build");
+        let temp_build_directory = self.output_path.join(BUILD_FILES_SUBDIRECTORY_NAME);
         create_dir_all(&temp_build_directory)
             .context("Failed to create a temporary build directory")?;
 
         // Load the collection config and use its parent directory of it as the search directory base.
         let configuration: CollectionConfiguration =
-            toml::from_str(&fs::read_to_string(&self.configuration_path)?)?;
+            toml::from_str(&fs::read_to_string(&self.configuration_file_path)?)?;
 
         // Recursively find shaderpack manifests.
         let directories: Vec<DirEntry> = WalkDir::new(
-            self.configuration_path
+            self.configuration_file_path
                 .parent()
                 .context("Failed to get the parent directory of the configuration file")?
                 .join(configuration.search_directory.path)
