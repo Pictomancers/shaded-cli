@@ -34,10 +34,10 @@ pub mod constants {
 
     /// The on-disk filename of a collection archive that contains shaderpacks and
     /// a collection manifest file at the root of the archive.
-    pub const COLLECTION_ARCHIVE_FILENAME: &str = "collection.zip";
+    pub const COLLECTION_ARCHIVE_FILENAME: &str = "shaded-collection.zip";
 
     /// The on-disk filename of the manifest contained in a collection with metadata about the collection.
-    pub const COLLECTION_MANIFEST_FILENAME: &str = "collection.json";
+    pub const COLLECTION_MANIFEST_FILENAME: &str = "shaded-collection.json";
 
     /// The name of the shader directory relative to the collection folder root.
     pub const SHADER_DIRECTORY_NAME: &str = "Shaders";

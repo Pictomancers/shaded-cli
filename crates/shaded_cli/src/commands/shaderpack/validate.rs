@@ -24,14 +24,19 @@ pub struct ValidateCommand {
 impl ValidateCommand {
     pub fn run(&self) -> Result<()> {
         let mut validation_failure = false;
+        let mut validation_warning = false;
 
         let manifest_directory = self
             .manifest_path
             .parent()
             .context("Unable to find manifest parent directory")?;
 
-        let manifest: ShaderPackManifest =
-            serde_json::from_str(&fs::read_to_string(&self.manifest_path)?)?;
+        println!("Loading Shaderpack File");
+        let manifest: ShaderPackManifest = serde_json::from_str(
+            &fs::read_to_string(&self.manifest_path)
+                .context("An error occured while reading shaderpack manifest")?,
+        )
+        .context("An error ocucred while parsing shaderpack manifest")?;
 
         // Informational field validation.
         {
@@ -70,6 +75,7 @@ impl ValidateCommand {
                 for problem in info_validation_problems {
                     match problem.1 {
                         ProblemType::Warning(warn) => {
+                            validation_warning = true;
                             eprintln!(
                                 "{}",
                                 format!("  * Warning with {}: {:?}", problem.0, warn).yellow()
@@ -105,6 +111,7 @@ impl ValidateCommand {
                 for problem in info_validation_problems {
                     match problem.1 {
                         ProblemType::Warning(warn) => {
+                            validation_warning = true;
                             eprintln!(
                                 "{}",
                                 format!("  * Warning with {}: {:?}", problem.0, warn).yellow()
@@ -140,6 +147,7 @@ impl ValidateCommand {
                 for problem in info_validation_problems {
                     match problem.1 {
                         ProblemType::Warning(warn) => {
+                            validation_warning = true;
                             eprintln!(
                                 "{}",
                                 format!("  * Warning with {}: {:?}", problem.0, warn).yellow()
@@ -175,6 +183,7 @@ impl ValidateCommand {
                 for problem in info_validation_problems {
                     match problem.1 {
                         ProblemType::Warning(warn) => {
+                            validation_warning = true;
                             eprintln!(
                                 "{}",
                                 format!("  * Warning with {}: {:?}", problem.0, warn).yellow()
@@ -210,6 +219,7 @@ impl ValidateCommand {
                 for problem in info_validation_problems {
                     match problem.1 {
                         ProblemType::Warning(warn) => {
+                            validation_warning = true;
                             eprintln!(
                                 "{}",
                                 format!("  * Warning with {}: {:?}", problem.0, warn).yellow()
@@ -231,8 +241,16 @@ impl ValidateCommand {
 
         if validation_failure {
             Err(anyhow!(
-                "Manifest was invalid due to one or more validation errors occuring".yellow()
+                "Manifest was invalid due to one or more validation errors occuring"
+                    .yellow()
+                    .bold()
             ))
+        } else if validation_warning {
+            println!(
+                "{}",
+                "Shader manifest is valid, but has validation warnings".yellow()
+            );
+            Ok(())
         } else {
             println!("{}", "Shader manifest is valid".green());
             Ok(())

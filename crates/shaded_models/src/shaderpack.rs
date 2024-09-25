@@ -83,5 +83,5 @@ pub mod constants {
     // please take considerable care when if/when doing so.
 
     /// The on-disk filename of a shaderpack manifest.
-    pub const SHADERPACK_MANIFEST_FILENAME: &str = "manifest.json";
+    pub const SHADERPACK_MANIFEST_FILENAME: &str = "shaded-manifest.json";
 }

@@ -13,14 +13,14 @@ members = ["crates/shaded_models"]
 
 [dependencies]
 shaded_models = { path = "crates/shaded_models" }
-anyhow = { version = "1.0.80", features = ["backtrace"] }
-clap = { version = "4.5.2", features = ["derive"] }
+anyhow = { version = "1.0.89", features = ["backtrace"] }
+clap = { version = "4.5.18", features = ["derive"] }
 colored = "2.1.0"
-serde_json = "1.0.114"
-toml = "0.8.10"
+serde_json = "1.0.128"
+toml = "0.8.19"
 walkdir = "2.5.0"
-zip = "0.6.6"
-zip-extensions = "0.6.2"
+zip = "2.2.0"
+zip-extensions = "0.8.1"
 
 [profile.release]
 opt-level = "z"

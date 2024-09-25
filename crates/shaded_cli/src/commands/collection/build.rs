@@ -62,8 +62,11 @@ impl BuildCommand {
             .context("Failed to create a temporary build directory")?;
 
         // Load the collection config and use its parent directory of it as the search directory base.
-        let configuration: CollectionConfiguration =
-            toml::from_str(&fs::read_to_string(&self.configuration_file_path)?)?;
+        let configuration: CollectionConfiguration = toml::from_str(
+            &fs::read_to_string(&self.configuration_file_path)
+                .context("Failed to read configuration")?,
+        )
+        .context("Failed to load toml from configuration")?;
 
         // Recursively find shaderpack manifests.
         let directories: Vec<DirEntry> = WalkDir::new(
