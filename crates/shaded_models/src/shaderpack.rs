@@ -8,7 +8,7 @@ use std::{
 };
 use thiserror::Error;
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Default, Clone)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Clone)]
 #[serde(rename_all(serialize = "PascalCase", deserialize = "PascalCase"))]
 pub struct ShaderPackManifest {
     pub manifest_version: u8,
@@ -25,7 +25,7 @@ pub struct ShaderPackManifest {
     pub addons: Option<Vec<FileDeclaration>>,
 }
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Default, Clone)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Clone)]
 #[serde(rename_all(serialize = "PascalCase", deserialize = "PascalCase"))]
 pub struct FileDeclaration {
     pub source: PathBuf,

@@ -31,7 +31,7 @@ impl ValidateCommand {
             .parent()
             .context("Unable to find manifest parent directory")?;
 
-        println!("Loading Shaderpack File");
+        println!("Loading shaderpack file");
         let manifest: ShaderPackManifest = serde_json::from_str(
             &fs::read_to_string(&self.manifest_path)
                 .context("An error occured while reading shaderpack manifest")?,
@@ -40,7 +40,7 @@ impl ValidateCommand {
 
         // Informational field validation.
         {
-            println!("Validating Information");
+            println!("Validating information");
             let mut info_validation_problems: HashMap<String, ProblemType> = HashMap::new();
 
             // Validate name.
@@ -96,7 +96,7 @@ impl ValidateCommand {
 
         // Shader validation.
         if let Some(shaders) = manifest.shaders {
-            println!("Validating Shaders");
+            println!("Validating shaders");
             let mut info_validation_problems: HashMap<String, ProblemType> = HashMap::new();
 
             if let Some(file_declaration_problems) =
@@ -132,7 +132,7 @@ impl ValidateCommand {
         }
 
         if let Some(textures) = manifest.textures {
-            println!("Validating Textures");
+            println!("Validating textures");
             let mut info_validation_problems: HashMap<String, ProblemType> = HashMap::new();
 
             if let Some(file_declaration_problems) =
@@ -168,7 +168,7 @@ impl ValidateCommand {
         }
 
         if let Some(presets) = manifest.presets {
-            println!("Validating Presets");
+            println!("Validating presets");
             let mut info_validation_problems: HashMap<String, ProblemType> = HashMap::new();
 
             if let Some(file_declaration_problems) =
@@ -204,7 +204,7 @@ impl ValidateCommand {
         }
 
         if let Some(addons) = manifest.addons {
-            println!("Validating Addons");
+            println!("Validating addons");
             let mut info_validation_problems: HashMap<String, ProblemType> = HashMap::new();
 
             if let Some(file_declaration_problems) =
@@ -270,7 +270,7 @@ fn validate_string_entry(
         failures.insert(
             field_name.to_owned(),
             ProblemType::Error(anyhow!(
-                "Contains empty whitespace at start or end of entry./"
+                "Contains empty whitespace at start or end of entry"
             )),
         );
     }

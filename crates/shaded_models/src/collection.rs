@@ -3,7 +3,7 @@
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Default, Clone)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Clone)]
 #[serde(rename_all(serialize = "PascalCase", deserialize = "PascalCase"))]
 pub struct CollectionManifest {
     pub manifest_version: u8,
@@ -14,7 +14,7 @@ pub struct CollectionManifest {
     pub shader_packs: Vec<CollectionShaderPack>,
 }
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Default, Clone)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Clone)]
 #[serde(rename_all(serialize = "PascalCase", deserialize = "PascalCase"))]
 pub struct CollectionShaderPack {
     pub name: String,

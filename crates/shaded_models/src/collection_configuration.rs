@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Default, Clone)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Clone)]
 pub struct CollectionConfiguration {
     pub configuration_version: u8,
     pub reshade_version: u8,
@@ -10,7 +10,7 @@ pub struct CollectionConfiguration {
     pub search_directory: CollectionConfigurationSearchDirectory,
 }
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Default, Clone)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, Clone)]
 pub struct CollectionConfigurationSearchDirectory {
     pub path: PathBuf,
     pub max_depth: usize,
